@@ -12,7 +12,7 @@ async function track(){
   
   console.log(i)
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true,
     args: [`--window-size=1920,1080`,'--no-sandbox','--disable-setuid-sandbox'],
     defaultViewport: {
@@ -39,7 +39,16 @@ async function track(){
   
   //await page.screenshot({path: 'fototrack.jpg'})
   try{
-    tradu(page)
+    
+    try{
+      console.log('opa')
+      tradu(page)
+    }
+    catch{
+      console.log('flechin')
+      
+    }
+    
 
     let e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -157,7 +166,9 @@ const interval = setInterval(() => {
 
 
 async function tradu(page){
-  let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+  await new Promise(r => setTimeout(r, 4000));
+  try{
+    let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
     await select[0].click()
     await new Promise(r => setTimeout(r, 1000));
     await page.keyboard.press('ArrowUp');
@@ -166,4 +177,13 @@ async function tradu(page){
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('Enter');
+  }
+  catch{
+    //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
+    let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
+    await flecha[0].click()
+    await new Promise(r => setTimeout(r, 1000));
+    tradu(page)
+  }
+  
 }
