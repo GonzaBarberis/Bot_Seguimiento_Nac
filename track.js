@@ -12,7 +12,7 @@ async function track(){
   
   console.log(i)
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true,
     args: [`--window-size=1920,1080`,'--no-sandbox','--disable-setuid-sandbox'],
     defaultViewport: {
@@ -23,9 +23,6 @@ async function track(){
 
   const page = await browser.newPage();
 
-  
-  await page.goto('https://postal.ninja/es#/7okdnE')
-  await new Promise(r => setTimeout(r, 3000));
 
   const estados = []
   estados[0] = []
@@ -36,17 +33,43 @@ async function track(){
   lugares[0] = []
   lugares[1] = []
   lugares[2] = []
-  
-  //await page.screenshot({path: 'fototrack.jpg'})
+
+
+
   try{
     
+    
+    console.log('---------------Track nº1 ')
+    await page.goto('https://postal.ninja/es#/7okdnE')
+    await new Promise(r => setTimeout(r, 3000));
+
+    console.log('ENTRO A TRADU')
     try{
-      tradu(page)
+      console.log('TRY...')
+      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+      await select[0].click()
     }
     catch{
-      console.log('Flecha')
+      console.log('CATCH....')
+      //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
+      let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
+      await flecha[0].click()
+      await new Promise(r => setTimeout(r, 3000));
       
+      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+      await select[0].click()
+    
+    
     }
+    console.log('SALIO BIEN?')
+    await new Promise(r => setTimeout(r, 1000));
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('Enter');
+    console.log('TRADUCIO!!')
     
 
     let e = 1 
@@ -69,12 +92,36 @@ async function track(){
     let ultimoMov1 = estados[0][estados[0].length-1]
     let ultimoLugar1 = lugares[0][lugares[0].length-1]
 
+
+    console.log('Correcto')
     await new Promise(r => setTimeout(r, 1000));
 
+    console.log('---------------Track nº2 ')
     await page.goto('https://postal.ninja/es#/DX2xkG')
     await new Promise(r => setTimeout(r, 3000));
 
-    tradu(page)
+    try{
+      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+      await select[0].click()
+    }
+    catch{
+      //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
+      let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
+      await flecha[0].click()
+      await new Promise(r => setTimeout(r, 3000));
+      
+      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+      await select[0].click()
+    
+    
+    }
+    await new Promise(r => setTimeout(r, 1000));
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('Enter');
 
     e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -95,13 +142,34 @@ async function track(){
 
     let ultimoMov2 = estados[1][estados[1].length-1]
     let ultimoLugar2 = lugares[1][lugares[1].length-1]
+    console.log('Correcto')
 
-    await new Promise(r => setTimeout(r, 1000));
-
+    console.log('---------------Track nº3 ')
     await page.goto('https://postal.ninja/es#/rm9XQy')
     await new Promise(r => setTimeout(r, 3000));
 
-    tradu(page)
+    try{
+      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+      await select[0].click()
+    }
+    catch{
+      //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
+      let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
+      await flecha[0].click()
+      await new Promise(r => setTimeout(r, 3000));
+      
+      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+      await select[0].click()
+    
+    
+    }
+    await new Promise(r => setTimeout(r, 1000));
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('ArrowUp');
+    await page.keyboard.press('Enter');
 
     e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -141,7 +209,7 @@ async function track(){
     
     
 
-
+    console.log('Correcto y cerrando página. Nuevo trackeo en 2hs')
     await new Promise(r => setTimeout(r, 1000));
     await browser.close()
   }
@@ -164,25 +232,34 @@ const interval = setInterval(() => {
 
 
 
-async function tradu(page){
-  await new Promise(r => setTimeout(r, 4000));
-  try{
-    let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-    await select[0].click()
-    await new Promise(r => setTimeout(r, 1000));
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('Enter');
-  }
-  catch{
-    //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
-    let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
-    await flecha[0].click()
-    await new Promise(r => setTimeout(r, 1000));
-    tradu(page)
-  }
+// async function tradu(page){
+//   await new Promise(r => setTimeout(r, 2000));
+//   console.log('ENTRO A TRADU')
+//   try{
+//     console.log('TRY...')
+//     let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+//     await select[0].click()
+//   }
+//   catch{
+//     console.log('CATCH....')
+//     //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
+//     let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
+//     await flecha[0].click()
+//     await new Promise(r => setTimeout(r, 3000));
+    
+//     let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+//     await select[0].click()
   
-}
+   
+//   }
+//   console.log('SALIO BIEN?')
+//   await new Promise(r => setTimeout(r, 1000));
+//   await page.keyboard.press('ArrowUp');
+//   await page.keyboard.press('ArrowUp');
+//   await page.keyboard.press('ArrowUp');
+//   await page.keyboard.press('ArrowUp');
+//   await page.keyboard.press('ArrowUp');
+//   await page.keyboard.press('Enter');
+//   console.log('TRADUCIO!!')
+  
+// }
