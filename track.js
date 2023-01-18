@@ -129,7 +129,7 @@ async function track(){
       cambio = mensaje
     }
 
-    bot.telegram.sendMessage(id,mensaje,{parse_mode: 'HTML'})
+    //bot.telegram.sendMessage(id,mensaje,{parse_mode: 'HTML'})
     
     
 
@@ -147,6 +147,10 @@ async function track(){
 }
 
 track()
+
+const interval = setInterval(() => {
+  track()
+}, 1000*60*120);
 
 
 
