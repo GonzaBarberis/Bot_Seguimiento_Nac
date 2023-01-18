@@ -41,11 +41,10 @@ async function track(){
   try{
     
     try{
-      console.log('opa')
       tradu(page)
     }
     catch{
-      console.log('flechin')
+      console.log('Flecha')
       
     }
     
