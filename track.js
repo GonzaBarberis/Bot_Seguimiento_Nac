@@ -12,7 +12,7 @@ async function track(){
   
   console.log(i)
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     ignoreHTTPSErrors: true,
     args: [`--window-size=1920,1080`,'--no-sandbox','--disable-setuid-sandbox'],
     defaultViewport: {
