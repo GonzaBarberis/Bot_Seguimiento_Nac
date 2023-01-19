@@ -12,7 +12,7 @@ async function track(){
   
   console.log(i)
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true,
     args: [`--window-size=1920,1080`,'--no-sandbox','--disable-setuid-sandbox'],
     defaultViewport: {
@@ -34,34 +34,37 @@ async function track(){
   lugares[1] = []
   lugares[2] = []
 
+  // try{
+    //   console.log('TRY...')
+    //   let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+    //   await select[0].click()
+    // }
+    // catch{
+    //   console.log('CATCH....')
+    //   //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
+    //   let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
+    //   await flecha[0].click()
+    //   await new Promise(r => setTimeout(r, 3000));
+      
+    //   let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+    //   await select[0].click()
+    
+    
+    // }
 
 
   try{
-    
-    
     console.log('---------------Track nº1 ')
-    await page.goto('https://postal.ninja/es#/7okdnE')
+    await page.goto('https://postal.ninja/es')
     await new Promise(r => setTimeout(r, 3000));
-
-    console.log('ENTRO A TRADU')
-    try{
-      console.log('TRY...')
-      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-      await select[0].click()
-    }
-    catch{
-      console.log('CATCH....')
-      //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
-      let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
-      await flecha[0].click()
-      await new Promise(r => setTimeout(r, 3000));
-      
-      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-      await select[0].click()
     
-    
-    }
-    console.log('SALIO BIEN?')
+    let input = await page.$x('/html/body/div/main/div[1]/div/form/label/input')
+    await input[0].click()
+    await page.keyboard.type('RD878405359AR')
+    await page.keyboard.press('Enter');
+    await new Promise(r => setTimeout(r, 6000));
+    let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+    await select[0].click()
     await new Promise(r => setTimeout(r, 1000));
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('ArrowUp');
@@ -69,11 +72,9 @@ async function track(){
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('Enter');
-    console.log('TRADUCIO!!')
-    
+    await new Promise(r => setTimeout(r, 3000));
 
     let e = 1 
-    await new Promise(r => setTimeout(r, 2000));
     while (e < 20) {
       try{
         let estado1 = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div[2]/div[2]/div[${e}]/div[2]/div[2]`)
@@ -92,36 +93,32 @@ async function track(){
     let ultimoMov1 = estados[0][estados[0].length-1]
     let ultimoLugar1 = lugares[0][lugares[0].length-1]
 
+    console.log(ultimoLugar1, ultimoMov1)
+
 
     console.log('Correcto')
     await new Promise(r => setTimeout(r, 1000));
 
     console.log('---------------Track nº2 ')
-    await page.goto('https://postal.ninja/es#/DX2xkG')
+    await page.goto('https://postal.ninja/es')
     await new Promise(r => setTimeout(r, 3000));
-
-    try{
-      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-      await select[0].click()
-    }
-    catch{
-      //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
-      let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
-      await flecha[0].click()
-      await new Promise(r => setTimeout(r, 3000));
-      
-      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-      await select[0].click()
     
-    
-    }
-    await new Promise(r => setTimeout(r, 1000));
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
+    //let input = await page.$x('/html/body/div/main/div[1]/div/form/label/input')
+   // await input[0].click()
+    await page.keyboard.type('RD876841696AR')
     await page.keyboard.press('Enter');
+    await new Promise(r => setTimeout(r, 5000));
+    //let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
+    //console.log('ya esta traducido')
+    // await select[0].click()
+    // await new Promise(r => setTimeout(r, 1000));
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('Enter');
+    //await new Promise(r => setTimeout(r, 3000));
 
     e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -145,31 +142,22 @@ async function track(){
     console.log('Correcto')
 
     console.log('---------------Track nº3 ')
-    await page.goto('https://postal.ninja/es#/rm9XQy')
+    await page.goto('https://postal.ninja/es')
     await new Promise(r => setTimeout(r, 3000));
-
-    try{
-      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-      await select[0].click()
-    }
-    catch{
-      //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
-      let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
-      await flecha[0].click()
-      await new Promise(r => setTimeout(r, 3000));
-      
-      let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-      await select[0].click()
     
-    
-    }
-    await new Promise(r => setTimeout(r, 1000));
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
-    await page.keyboard.press('ArrowUp');
+    //let input = await page.$x('/html/body/div/main/div[1]/div/form/label/input')
+    //await input[0].click()
+    await page.keyboard.type('RD876810654AR')
     await page.keyboard.press('Enter');
+    await new Promise(r => setTimeout(r, 5000));
+    // await select[0].click()
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('ArrowUp');
+    // await page.keyboard.press('Enter');
+    // await new Promise(r => setTimeout(r, 3000));
 
     e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -190,6 +178,8 @@ async function track(){
 
     let ultimoMov3 = estados[2][estados[2].length-1]
     let ultimoLugar3 = lugares[2][lugares[2].length-1]
+
+    console.log(ultimoLugar3, ultimoMov3)
 
 
     let mensaje = `<b>📫❗ <u>Seguimiento Nacional</u></b>\n\n<b>Memoria RAM: </b>\n🏤<i>${ultimoMov1}\n📍${ultimoLugar1}</i>\n<b>Luz Led RGB: </b>\n🏤<i>${ultimoMov2}\n📍${ultimoLugar2}</i>\n<b>SmartWatch: </b>\n🏤<i>${ultimoMov3}\n📍${ultimoLugar3}</i>`
@@ -228,38 +218,3 @@ const interval = setInterval(() => {
   track()
 }, 1000*60*120);
 
-
-
-
-
-// async function tradu(page){
-//   await new Promise(r => setTimeout(r, 2000));
-//   console.log('ENTRO A TRADU')
-//   try{
-//     console.log('TRY...')
-//     let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-//     await select[0].click()
-//   }
-//   catch{
-//     console.log('CATCH....')
-//     //let flecha = await page.$x(`/html/body/div/main/div[1]/div/div[2]/div/div[1]/div/div/a`)
-//     let flecha = await page.$x('/html/body/div/main/div[1]/div/div[2]/div/div[1]/a') 
-//     await flecha[0].click()
-//     await new Promise(r => setTimeout(r, 3000));
-    
-//     let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-//     await select[0].click()
-  
-   
-//   }
-//   console.log('SALIO BIEN?')
-//   await new Promise(r => setTimeout(r, 1000));
-//   await page.keyboard.press('ArrowUp');
-//   await page.keyboard.press('ArrowUp');
-//   await page.keyboard.press('ArrowUp');
-//   await page.keyboard.press('ArrowUp');
-//   await page.keyboard.press('ArrowUp');
-//   await page.keyboard.press('Enter');
-//   console.log('TRADUCIO!!')
-  
-// }
