@@ -12,7 +12,7 @@ async function track(){
   
   console.log(i)
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     ignoreHTTPSErrors: true,
     args: [`--window-size=1920,1080`,'--no-sandbox','--disable-setuid-sandbox'],
     defaultViewport: {
@@ -62,17 +62,22 @@ async function track(){
     await input[0].click()
     await page.keyboard.type('RD878405359AR')
     await page.keyboard.press('Enter');
-    await new Promise(r => setTimeout(r, 6000));
+    await new Promise(r => setTimeout(r, 8000));
     let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
     await select[0].click()
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 700));
     await page.keyboard.press('ArrowUp');
+    await new Promise(r => setTimeout(r, 700));
     await page.keyboard.press('ArrowUp');
+    await new Promise(r => setTimeout(r, 700));
     await page.keyboard.press('ArrowUp');
+    await new Promise(r => setTimeout(r, 700));
     await page.keyboard.press('ArrowUp');
+    await new Promise(r => setTimeout(r, 700));
     await page.keyboard.press('ArrowUp');
+    await new Promise(r => setTimeout(r, 700));
     await page.keyboard.press('Enter');
-    await new Promise(r => setTimeout(r, 3000));
+    await new Promise(r => setTimeout(r, 7000));
 
     let e = 1 
     while (e < 20) {
@@ -93,8 +98,6 @@ async function track(){
     let ultimoMov1 = estados[0][estados[0].length-1]
     let ultimoLugar1 = lugares[0][lugares[0].length-1]
 
-    console.log(ultimoLugar1, ultimoMov1)
-
 
     console.log('Correcto')
     await new Promise(r => setTimeout(r, 1000));
@@ -108,17 +111,6 @@ async function track(){
     await page.keyboard.type('RD876841696AR')
     await page.keyboard.press('Enter');
     await new Promise(r => setTimeout(r, 5000));
-    //let select = await page.$x('/html/body/div/main/div[1]/div/div[2]/div[2]/div[1]/div/div[2]/label/select')
-    //console.log('ya esta traducido')
-    // await select[0].click()
-    // await new Promise(r => setTimeout(r, 1000));
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('Enter');
-    //await new Promise(r => setTimeout(r, 3000));
 
     e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -150,14 +142,6 @@ async function track(){
     await page.keyboard.type('RD876810654AR')
     await page.keyboard.press('Enter');
     await new Promise(r => setTimeout(r, 5000));
-    // await select[0].click()
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('ArrowUp');
-    // await page.keyboard.press('Enter');
-    // await new Promise(r => setTimeout(r, 3000));
 
     e = 1 
     await new Promise(r => setTimeout(r, 2000));
@@ -179,11 +163,10 @@ async function track(){
     let ultimoMov3 = estados[2][estados[2].length-1]
     let ultimoLugar3 = lugares[2][lugares[2].length-1]
 
-    console.log(ultimoLugar3, ultimoMov3)
-
 
     let mensaje = `<b>📫❗ <u>Seguimiento Nacional</u></b>\n\n<b>Memoria RAM: </b>\n🏤<i>${ultimoMov1}\n📍${ultimoLugar1}</i>\n<b>Luz Led RGB: </b>\n🏤<i>${ultimoMov2}\n📍${ultimoLugar2}</i>\n<b>SmartWatch: </b>\n🏤<i>${ultimoMov3}\n📍${ultimoLugar3}</i>`
 
+    console.log('Correcto y cerrando página. Nuevo trackeo en 2hs')
 
     if (mensaje === cambio){
       console.log('No hay cambios')
@@ -197,9 +180,9 @@ async function track(){
 
     //bot.telegram.sendMessage(id,mensaje,{parse_mode: 'HTML'})
     
-    
+    //console.log(ultimoLugar1, ultimoMov1,'\n',ultimoLugar2, ultimoMov2,'\n',ultimoLugar3, ultimoMov3)
 
-    console.log('Correcto y cerrando página. Nuevo trackeo en 2hs')
+    
     await new Promise(r => setTimeout(r, 1000));
     await browser.close()
   }
@@ -209,7 +192,7 @@ async function track(){
     await browser.close()
   }
 
-  
+  i++
 }
 
 track()
