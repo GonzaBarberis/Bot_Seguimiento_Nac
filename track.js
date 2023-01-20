@@ -192,7 +192,7 @@ async function track() {
       console.log("No hay cambios");
       //console.log(mensaje + ' y ' + cambio)
     } else {
-      if (ultimoMov1 != 'Customs Process'){
+      if (ultimoMov1 != 'EN Customs Process' || !ultimoMov1.includes('Customs')){
         console.log("Hubo un cambio en los avisos");
         bot.telegram.sendMessage(id, mensaje, { parse_mode: "HTML" });
         cambio = mensaje;
