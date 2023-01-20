@@ -204,7 +204,7 @@ async function track() {
     }
 
     //bot.telegram.sendMessage(id,mensaje,{parse_mode: 'HTML'})
-
+    //Hello
     //console.log(ultimoLugar1, ultimoMov1,'\n',ultimoLugar2, ultimoMov2,'\n',ultimoLugar3, ultimoMov3)
 
     await new Promise((r) => setTimeout(r, 1000));
