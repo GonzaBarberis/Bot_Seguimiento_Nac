@@ -35,28 +35,28 @@ async function trackeo(){
   
     let input = await page.$x('//*[@id="track-form"]/input');
     await input[0].click();
-    await page.keyboard.type("RG010827286CN");
+    await page.keyboard.type("RD875313640AR");
     await page.keyboard.press("Enter");
   
   
     await new Promise((r) => setTimeout(r, 10000));
 
       
-    let info = await page.$x('//*[@id="track_item_6_RG010827286CN_0"]/div[2]/div/text()');
+    let info = await page.$x('//*[@id="track_item_90_RD875313640AR_0"]/div[2]/div/text()');
     await new Promise((r) => setTimeout(r, 1000));
     let infoText = await page.evaluate((el) => el.textContent, info[0]);
     texto[0] = infoText.toUpperCase()
   
     await new Promise((r) => setTimeout(r, 800));
   
-    let lugar = await page.$x('//*[@id="track_item_6_RG010827286CN_0"]/div[2]/div/span');
+    let lugar = await page.$x('//*[@id="track_item_90_RD875313640AR_0"]/div[2]/div/span');
     await new Promise((r) => setTimeout(r, 1000));
     let lugarText = await page.evaluate((el) => el.textContent, lugar[0]);
     texto[1] = lugarText
   
     await new Promise((r) => setTimeout(r, 800));
   
-    let fecha = await page.$x('//*[@id="track_item_6_RG010827286CN_0"]/div[2]/time/text()');
+    let fecha = await page.$x('//*[@id="track_item_90_RD875313640AR_0"]/div[2]/time/text()');
     await new Promise((r) => setTimeout(r, 1000));
     let fechaText = await page.evaluate((el) => el.textContent, fecha[0]);
     texto[2] = fechaText
@@ -144,11 +144,6 @@ async function trackeo(){
    
 
     let msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>✅Camiseta ARG:</b>\n<i> 🏤${texto[0]}\n 📍${texto[1]}\n 📅${texto[2]}</i>\n<b>✅Switches:</b>\n<i> 🏤${texto[3]}\n 📍${texto[4]}\n 📅${texto[5]}</i>\n<b>✅Keycaps:</b>\n<i> 🏤${texto[6]}\n 📍${texto[7]}\n 📅${texto[8]}</i>\n<b>✅Funda:</b>\n<i> 🏤${texto[9]}\n 📍${texto[10]}\n 📅${texto[11]}</i>`
-
-
-
-
-
 
 
 
