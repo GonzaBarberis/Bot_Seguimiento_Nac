@@ -61,10 +61,6 @@ async function trackeo(){
     await new Promise((r) => setTimeout(r, 800));
 
 
-    cambioTrack(page, "")
-  
-    
-
     let msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>Camiseta ARG:</b>\n<i>🏤${texto[0]}\n📍${texto[1]}\n📅${texto[2]}</i>`
 
 
@@ -89,7 +85,7 @@ async function trackeo(){
     await browser.close();
   }
   
-  i++
+ 
 }
 
 
