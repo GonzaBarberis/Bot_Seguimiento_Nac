@@ -55,33 +55,8 @@ async function trackeo(){
   
     await new Promise((r) => setTimeout(r, 10000));
 
-    
-    // let info = await page.$x('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/text()');    
-    // await new Promise((r) => setTimeout(r, 1000));
-    // let infoText = await page.evaluate((el) => el.textContent, info[0]);
-    // texto[0] = infoText.toUpperCase()
-  
-    // await new Promise((r) => setTimeout(r, 800));
-  
-    // let lugar = await page.$x('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/span');
-    // await new Promise((r) => setTimeout(r, 1000));
-    // let lugarText = await page.evaluate((el) => el.textContent, lugar[0]);
-    // texto[1] = lugarText
-  
-    // await new Promise((r) => setTimeout(r, 800));
-  
-    // let fecha = await page.$x('//*[@id="track_item_90_RP108478134MU_0"]/div[2]/time/text()');
-    // await new Promise((r) => setTimeout(r, 1000));
-    // let fechaText = await page.evaluate((el) => el.textContent, fecha[0]);
-    // texto[2] = fechaText
-    // await new Promise((r) => setTimeout(r, 800));
-
 
     try {
-      // Esperar a que aparezcan los elementos en la página
-      //await page.waitForXPath('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/text()');
-      // await page.waitForXPath('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/span');
-      // await page.waitForXPath('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/time/text()');
     
       // Obtener los elementos
       const infoElements = await page.$x('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/text()');
@@ -110,6 +85,81 @@ async function trackeo(){
     } catch (error) {
       console.error('Hubo un error:', error);
     }
+    
+    if (msg === cambio) {
+      console.log("No hay cambios");
+    } else {
+      console.log("Hubo un cambio en los avisos");
+      bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
+      cambio = msg;
+    }
+
+
+  
+    await browser.close();
+  }
+  catch (error){
+    await new Promise((r) => setTimeout(r, 2000));
+    console.error(
+      "Hubo un error, intentando de nuevo dentro de 1hs 30min.", error.message
+    );
+    await browser.close();
+  }
+  
+ 
+}
+
+
+async function cambioTrack(page, number){
+  let input = await page.$x('//*[@id="track-form"]/input');
+  await input[0].click();
+  for (let j = 0; j < 20;j++){
+    await page.keyboard.press("Backspace");
+  }
+  await page.keyboard.type(number);
+  await new Promise((r) => setTimeout(r, 700));
+  await page.keyboard.press("Enter");
+  await new Promise((r) => setTimeout(r, 7000));
+}
+
+console.log("Iniciando...")
+
+trackeo()
+
+const interval = setInterval(() => {
+  //track();
+  trackeo()
+}, 1000 * 60 * 120);
+
+const prueba = () =>{
+  bot.telegram.sendMessage(id, 'Test', { parse_mode: "HTML" });
+}
+
+//prueba()
+
+
+    
+    // let info = await page.$x('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/text()');    
+    // await new Promise((r) => setTimeout(r, 1000));
+    // let infoText = await page.evaluate((el) => el.textContent, info[0]);
+    // texto[0] = infoText.toUpperCase()
+  
+    // await new Promise((r) => setTimeout(r, 800));
+  
+    // let lugar = await page.$x('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/span');
+    // await new Promise((r) => setTimeout(r, 1000));
+    // let lugarText = await page.evaluate((el) => el.textContent, lugar[0]);
+    // texto[1] = lugarText
+  
+    // await new Promise((r) => setTimeout(r, 800));
+  
+    // let fecha = await page.$x('//*[@id="track_item_90_RP108478134MU_0"]/div[2]/time/text()');
+    // await new Promise((r) => setTimeout(r, 1000));
+    // let fechaText = await page.evaluate((el) => el.textContent, fecha[0]);
+    // texto[2] = fechaText
+    // await new Promise((r) => setTimeout(r, 800));
+
+
     
 
 
@@ -151,57 +201,9 @@ async function trackeo(){
 
     // msg = msg + `\n<b>Zapas Vans:</b>\n<i>🏤${texto[0]}\n📍${texto[1]}\n📅${texto[2]}</i>`
 
-    if (msg === cambio) {
-      console.log("No hay cambios");
-    } else {
-      console.log("Hubo un cambio en los avisos");
-      bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
-      cambio = msg;
-    }
 
-
-  
-    await browser.close();
-  }
-  catch (error){
-    await new Promise((r) => setTimeout(r, 2000));
-    console.error(
-      "Hubo un error, intentando de nuevo dentro de 1hs 30min.", error.message
-    );
-    await browser.close();
-  }
-  
- 
-}
-
-
-async function cambioTrack(page, number){
-  let input = await page.$x('//*[@id="track-form"]/input');
-  await input[0].click();
-  for (let j = 0; j < 20;j++){
-    await page.keyboard.press("Backspace");
-  }
-  await page.keyboard.type(number);
-  await new Promise((r) => setTimeout(r, 700));
-  await page.keyboard.press("Enter");
-  await new Promise((r) => setTimeout(r, 7000));
-}
-
-
-
-
-console.log("Iniciando...")
-
-trackeo()
-
-const interval = setInterval(() => {
-  //track();
-  trackeo()
-}, 1000 * 60 * 120);
-
-const prueba = () =>{
-  bot.telegram.sendMessage(id, 'Test', { parse_mode: "HTML" });
-}
-
-//prueba()
-
+    
+    // Esperar a que aparezcan los elementos en la página
+    //await page.waitForXPath('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/text()');
+    // await page.waitForXPath('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/div/span');
+    // await page.waitForXPath('//*[@id="track_item_78_RP108478134MU_0"]/div[2]/time/text()');
