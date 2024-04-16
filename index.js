@@ -17,6 +17,8 @@ let cambio = "";
 let msg = "";
 
 
+trackeo()
+
 app.get('/', async (req, res) => {
 
 
@@ -43,16 +45,7 @@ app.get('/test', async (req, res) => {
 
 async function trackeo(){
 
-  
-
-  function guardarCookies(cookies) {
-    fs.writeFileSync('cookies.json', JSON.stringify(cookies));
-  }
-
-  function cargarCookies() {
-    return JSON.parse(fs.readFileSync('cookies.json'));
-  }
-
+    
 
   const browser = await puppeteer.launch({
     ignoreHTTPSErrors: true,
@@ -72,13 +65,7 @@ async function trackeo(){
   try{
     const page = await browser.newPage();
     await page.goto("https://chinapost-track.com/track-trace");
-    
-    //await new Promise((r) => setTimeout(r, 4000));
 
-    const cookies = await page.cookies();
-    guardarCookies(cookies);
-    const cookiesGuardadas = cargarCookies();
-    await page.setCookie(...cookiesGuardadas);
 
     let input = await page.$x('//*[@id="track-form"]/input'); 
 
@@ -130,8 +117,7 @@ async function trackeo(){
       console.log("No hay cambios");
     } else {
       console.log("Hubo un cambio en los avisos");
-      bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
-      //console.log(msg)
+      //bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
       cambio = msg;
     }
 
