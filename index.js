@@ -1,22 +1,7 @@
-//const puppeteer = require("puppeteer-core");
-//const chrome = require("chrome-aws-lambda")
 const { Telegraf, Context } = require("telegraf");
 const fs = require("fs");
-// const express = require("express");
 require("dotenv").config();
-
-// const bot = new Telegraf("5906119682:AAFitZoSk51MOv4iU2GXbLYSTvUaXccEcL4");
-// const id = "5760438151";
-
-let chrome = {};
-let puppeteer;
-
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  chrome = require("chrome-aws-lambda");
-  puppeteer = require("puppeteer-core");
-} else {
-  puppeteer = require("puppeteer");
-}
+const puppeteer = require("puppeteer");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const id = process.env.CHAT_ID;
@@ -55,8 +40,8 @@ async function trackeo() {
     await new Promise((r) => setTimeout(r, 1800));
     await page.keyboard.press("Enter");
 
+    // -- Doble ingreso de track por si hay error --
     // await new Promise((r) => setTimeout(r, 3000));
-
     // let input2 = await page.$x('//*[@id="track-form"]/input');
     // await input2[0].click();
     // await page.keyboard.type("RG023708764CN");
@@ -113,7 +98,7 @@ async function trackeo() {
     if (msg === cambio) {
       console.log("No hay cambios");
     } else {
-      console.log("Hubo un cambio en los avisos");
+      console.log("Hay un cambio en los avisos");
       bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
       cambio = msg;
     }
@@ -133,9 +118,9 @@ console.log("Iniciando...");
 
 trackeo();
 
-// const interval = setInterval(() => {
-//   trackeo()
-// }, 1000 * 60 * 120);
+const interval = setInterval(() => {
+  trackeo();
+}, 1000 * 60 * 120);
 
 const pruebaMsj = () => {
   msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>Camiseta Boca 🔵🟡:</b>\n<i>🏤 CORREO\n📍 SEOUL\n📅 17/04/2024</i>`;
