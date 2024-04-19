@@ -2,11 +2,11 @@ const { Telegraf, Context } = require("telegraf");
 const fs = require("fs");
 require("dotenv").config();
 const puppeteer = require("puppeteer");
+const { type } = require("os");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const id = process.env.CHAT_ID;
 
-let i = 0;
 let cambio = "";
 let msg = "";
 
@@ -14,11 +14,7 @@ async function trackeo() {
   const browser = await puppeteer.launch({
     ignoreHTTPSErrors: true,
     headless: "new",
-    args: [
-      `--window-size=1200,800`,
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-    ],
+    args: [`--window-size=1200,800`, "--no-sandbox", "--disable-setuid-sandbox"],
     defaultViewport: {
       width: 1200,
       height: 800,
@@ -28,14 +24,15 @@ async function trackeo() {
   try {
     const page = await browser.newPage();
     await page.goto("https://chinapost-track.com/track-trace");
-
     await new Promise((r) => setTimeout(r, 2000));
 
-    let input = await page.$x('//*[@id="track-form"]/input');
+    //let input = await page.$x('//*[@id="track-form"]/input');
+
+    await page.click("#track-form > input");
 
     console.log("Iniciando clicks...");
 
-    await input[0].click();
+    //await input[0].click();
     await page.keyboard.type("RG023708764CN");
     await new Promise((r) => setTimeout(r, 1800));
     await page.keyboard.press("Enter");
@@ -48,48 +45,25 @@ async function trackeo() {
     // await new Promise((r) => setTimeout(r, 1800));
     // await page.keyboard.press("Enter");
 
-    await new Promise((r) => setTimeout(r, 15000));
+    await new Promise((r) => setTimeout(r, 25000));
 
     try {
-      const infoElements = await page.$x(
-        '//*[@id="track_item_6_RG023708764CN_0"]/div[2]/div/text() '
+      const infoText = await page.$eval("#track_item_6_RG023708764CN_0 > div.tracking-data > div", (element) =>
+        element.textContent.trim().toUpperCase()
       );
-      const lugarElements = await page.$x(
-        '//*[@id="track_item_6_RG023708764CN_0"]/div[2]/div/span'
-      );
-      const fechaElements = await page.$x(
-        '//*[@id="track_item_6_RG023708764CN_0"]/div[2]/time/text()'
+      const lugarText = await page.$eval("#track_item_6_RG023708764CN_0 > div.tracking-data > div > span", (element) =>
+        element.textContent.trim().toUpperCase()
       );
 
-      if (
-        infoElements.length > 0 &&
-        lugarElements.length > 0 &&
-        fechaElements.length > 0
-      ) {
-        await new Promise((r) => setTimeout(r, 1000));
+      const elementoFecha = await page.$x('//*[@id="track_item_6_RG023708764CN_0"]/div[2]/time/text()');
+      const fechaText = await page.evaluate((el) => el.textContent, elementoFecha[0]);
 
-        const infoText = await page.evaluate(
-          (el) => el.textContent,
-          infoElements[0]
-        );
-        const lugarText = await page.evaluate(
-          (el) => el.textContent,
-          lugarElements[0]
-        );
-        const fechaText = await page.evaluate(
-          (el) => el.textContent,
-          fechaElements[0]
-        );
+      if (infoText && lugarText && fechaText) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        const textoInfo = infoText.toUpperCase();
-        const textoLugar = lugarText.toUpperCase();
-        const textoFecha = fechaText.toUpperCase();
-
-        msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>Camiseta Boca 🔵🟡:</b>\n<i>🏤 ${textoInfo}\n📍 ${textoLugar}\n📅 ${textoFecha}</i>`;
+        msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>Camiseta Boca 🔵🟡:</b>\n<i>🏤 ${infoText}\n📍 ${lugarText}\n📅 ${fechaText}</i>`;
       } else {
-        console.error(
-          "No se encontraron todos los elementos que coinciden con las expresiones XPath."
-        );
+        console.error("No se encontraron todos los elementos que coinciden con las expresiones XPath.");
       }
     } catch (error) {
       console.error("Hubo un error:", error);
@@ -106,10 +80,7 @@ async function trackeo() {
     await browser.close();
   } catch (error) {
     await new Promise((r) => setTimeout(r, 2000));
-    console.error(
-      "Hubo un error, intentando de nuevo dentro de 1hs 30min.",
-      error
-    );
+    console.error("Hubo un error, intentando de nuevo dentro de 1hs 30min.", error);
     await browser.close();
   }
 }
