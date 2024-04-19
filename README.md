@@ -18,6 +18,6 @@ El funcionamineto del bot es muy sencillo, lo que hace es consultar periódicame
 
 *Imagen 1: Ejemplo de notificación de movimiento en el estado del envío*
 
-![Mockup 2](img/mockup2.jpg)
+![Mockup 2](img/mockup2.png)
 
 *Imagen 2: Vista previa del bot en funcionamiento en la interfaz de Telegram*
