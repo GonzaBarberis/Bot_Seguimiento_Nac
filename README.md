@@ -14,7 +14,7 @@ Este es un bot de Telegram programado en JavaScript que utiliza Puppeteer para r
 
 El funcionamineto del bot es muy sencillo, lo que hace es consultar periódicamente (cada 1:30hs) la página web de seguimiento de envíos internacionales 'China Post' (https://chinapost-track.com/track-trace). Si detecta algún cambio con respecto al ultimo estado del envío registrado, envía una notificación vía Telegram al usuario.
 
-![Mockup 1](img/mockup1.jpg)
+![Mockup 1](img/mockup1.png)
 
 *Imagen 1: Ejemplo de notificación de movimiento en el estado del envío*
 
