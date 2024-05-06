@@ -2,7 +2,7 @@
   "name": "bot17track",
   "version": "1.0.0",
   "description": "",
-  "main": "track.js",
+  "main": "scrapPostal.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bot": "nodemon index.js"
@@ -11,12 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
-    "nodemon": "^3.1.0",
     "puppeteer": "^19.5.2",
     "puppeteer-core": "^19.5.2",
     "telegraf": "^4.11.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
