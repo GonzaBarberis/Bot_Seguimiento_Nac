@@ -49,13 +49,13 @@ async function trackeo() {
     browser = await puppeteer.launch({
       executablePath: "/usr/bin/google-chrome", // Ruta para Ubuntu runner en GitHub Actions
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: "new",
+      headless: false,
     });
   } else {
     browser = await puppeteer.launch({
       executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", // Ruta local de chrome.exe en Windows
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      headless: "new",
+      headless: false,
     });
   }
 
