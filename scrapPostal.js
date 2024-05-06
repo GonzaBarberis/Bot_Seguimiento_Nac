@@ -75,39 +75,47 @@ async function trackeo() {
       const elements = await page.$$(selector);
 
       // Verifica que haya suficientes elementos para obtener el antepenúltimo
-      //if (elements.length >= 2) {
-      const anteultimoElemento = elements[elements.length - 2];
+      if (elements.length >= 2) {
+        const anteultimoElemento = elements[elements.length - 2];
 
-      const detalles = await page.evaluate((el) => {
-        const dt = el.querySelector("div.dt") ? el.querySelector("div.dt").textContent.trim() : "No hay información registrada";
-        const dsc = el.querySelector("div.info > div.dsc")
-          ? el.querySelector("div.info > div.dsc").textContent.trim()
-          : "No hay información registrada";
-        const loc = el.querySelector("div.info > div.loc")
-          ? el.querySelector("div.info > div.loc").textContent.trim()
-          : "No hay información registrada";
-        return { dt, dsc, loc };
-      }, anteultimoElemento);
+        const detalles = await page.evaluate((el) => {
+          const dt = el.querySelector("div.dt") ? el.querySelector("div.dt").textContent.trim() : "No hay información registrada";
+          const dsc = el.querySelector("div.info > div.dsc")
+            ? el.querySelector("div.info > div.dsc").textContent.trim()
+            : "No hay información registrada";
+          const loc = el.querySelector("div.info > div.loc")
+            ? el.querySelector("div.info > div.loc").textContent.trim()
+            : "No hay información registrada";
+          return { dt, dsc, loc };
+        }, anteultimoElemento);
 
-      //console.log("Info NUEVA: ", detalles);
+        //console.log("Info NUEVA: ", detalles);
 
-      let infoCargada = await JSON.parse(fs.readFileSync(statusFilePath, "utf-8"));
+        let infoCargada = await JSON.parse(fs.readFileSync(statusFilePath, "utf-8"));
 
-      //console.log("Info VIEJA: ", infoCargada);
+        //console.log("Info VIEJA: ", infoCargada);
 
-      if (JSON.stringify(detalles) !== JSON.stringify(infoCargada)) {
-        console.log("# La información se actualizó");
+        if (JSON.stringify(detalles) !== JSON.stringify(infoCargada)) {
+          console.log("# La información se actualizó");
 
-        let msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>Camiseta Boca 🔵🟡:</b>\n<i>🏤 ${detalles.dsc}\n📍 ${detalles.loc}\n📅 ${detalles.dt}</i>`;
+          let msg = `📦 ❗ <b><u>Nuevo movimiento</u></b>\n\n<b>Camiseta Boca 🔵🟡:</b>\n<i>🏤 ${detalles.dsc}\n📍 ${detalles.loc}\n📅 ${detalles.dt}</i>`;
 
-        bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
+          bot.telegram.sendMessage(id, msg, { parse_mode: "HTML" });
+        } else {
+          console.log("# No hay cambios en la información");
+          fs.writeFileSync(statusFilePath, JSON.stringify(detalles, null, 2));
+        }
       } else {
-        console.log("# No hay cambios en la información");
-        fs.writeFileSync(statusFilePath, JSON.stringify(detalles, null, 2));
+        // const elements = await page.$(
+        //   "body > div.pnj-container > main > section > div.track.list > div > div.event-row > div.event > div > div > div.dsc"
+        // );
+
+        textoPlano = await page.$(
+          `body > div.pnj-container > main > section > div.track.list > div > div.event-row > div.event > div > div > div.dsc`,
+          (element) => element.textContent.trim().toUpperCase()
+        );
+        console.log("# ! Error: No hay suficientes elementos para seleccionar el elemento. Se encontro: ", textoPlano);
       }
-      //} else {
-      // console.log("# ! Error: No hay suficientes elementos para seleccionar el elemento.");
-      //}
     } catch (error) {
       console.error("# ! Error: No se pudo conseguir los elementos:", error);
       await browser.close();
